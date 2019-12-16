@@ -6,6 +6,8 @@
 
 -- Your code here
 
+display.setStatusBar(display.HiddenStatusBar)
+
 -- 1 - Corona Engine Bibliotheken aanspreken
 
 -- 2 - Vaste variablen aanmaken
