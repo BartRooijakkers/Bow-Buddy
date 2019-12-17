@@ -25,13 +25,17 @@ local wall = display.newImageRect("assets/images/bricks.png", display.contentWid
 wall.x = display.contentCenterX
 wall.y = display.contentCenterY *1.1
 
-local ground = display.newImageRect("assets/images/biggrond.png", display.contentWidth, display.contentHeight *0.75)
-ground.x =display.contentCenterX
-ground.y =display.contentCenterY *2.3
+local grass = display.newImageRect("assets/images/grass.png", display.contentWidth*2.4 , display.contentHeight*0.25)
+grass.x = display.contentCenterX * 0.18
+grass.y = display.contentCenterY * 1.83
 
 local ballon = display.newImageRect("assets/images/Ballon.png",display.contentWidth * 0.1, display.contentHeight *0.3 )
 ballon.x = display.contentCenterX *1.8
 ballon.y = display.contentCenterY *1.47
+
+local avatar = display.newImageRect("assets/images/stickstatic.png", display.contentWidth* 0.3, display.contentHeight*0.3)
+avatar.x = display.contentCenterX * 0.15
+avatar.y = display.contentCenterY * 1.5
 
 
 function zweef()
@@ -41,6 +45,7 @@ function zweef2()
 transition.to( ballon,{x=display.contentCenterX *1.8,y=display.contentCenterY *1.40,time=1500, onComplete = zweef} )
 end
 zweef()
+
 -- 4 - Functies
 
 
