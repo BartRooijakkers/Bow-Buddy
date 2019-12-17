@@ -13,6 +13,8 @@ local title = display.newText("Bow & Buddy", display.contentCenterX, display.con
 display.setStatusBar( display.HiddenStatusBar )
 
 
+display.setStatusBar(display.HiddenStatusBar)
+
 -- 1 - Corona Engine Bibliotheken aanspreken
 
 -- 2 - Vaste variablen aanmaken
