@@ -6,7 +6,6 @@
 
 -- Your code here
 
-
 local background = display.newImageRect( "background.gif",display.contentWidth, display.contentHeight )
 background.x = display.contentCenterX
 background.y = display.contentCenterY
