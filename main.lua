@@ -8,7 +8,6 @@
 local background = display.newImageRect( "background.png",display.contentWidth, display.contentHeight )
 background.x = display.contentCenterX
 background.y = display.contentCenterY
-local title = display.newText("Bow & Buddy", display.contentCenterX, 350, native.systemFontBold, 90)
 
 display.setStatusBar( display.HiddenStatusBar )
 
