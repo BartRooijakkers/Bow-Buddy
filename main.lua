@@ -5,7 +5,7 @@
 -----------------------------------------------------------------------------------------
 
 -- Your code here
-local background = display.newImageRect( "background.gif",display.contentWidth, display.contentHeight )
+local background = display.newImageRect( "background.png",display.contentWidth, display.contentHeight )
 background.x = display.contentCenterX
 background.y = display.contentCenterY
 local title = display.newText("Bow & Buddy", display.contentCenterX, 350, native.systemFontBold, 90)
