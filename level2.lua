@@ -12,7 +12,7 @@ background.y = display.contentCenterY
 display.setStatusBar( display.HiddenStatusBar )
 
 local ballon = display.newImageRect("assets/images/Ballon.png",display.contentWidth*0.06 ,display.contentHeight*0.2 )
-ballon.x = display.contentCenterX
+ballon.x = display.contentCenterX*1.9
 ballon.y = display.contentCenterY *1.40
 
 local avatar = display.newImageRect("assets/images/stickstatic.png", display.contentWidth* 0.3, display.contentHeight*0.3)
@@ -43,24 +43,20 @@ local grass = display.newImageRect("assets/images/grass.png", display.contentWid
 grass.x = display.contentCenterX * 0.18
 grass.y = display.contentCenterY * 1.83
 
-local buddy = display.newImageRect( "assets/images/buddy.png",display.contentWidth*0.1 ,display.contentHeight*0.25)
+local buddy = display.newImageRect( "assets/images/buddy.png",display.contentWidth*0.05 ,display.contentHeight*0.12)
 buddy.x = display.contentCenterX * 0.1
 buddy.y = display.contentCenterY * 1.2
 
 
-function uitbuis()
-transition.to( ballon,{x=display.contentCenterX,y=display.contentCenterY *1,time=1500, onComplete = topos} )
-end
-function topos()
-transition.to( ballon,{x=display.contentCenterX*1.9,y=display.contentCenterY *1.5,time=2500, onComplete = zweef} )
-end
+
+
 function zweef()
 transition.to( ballon,{x=display.contentCenterX *1.9,y=display.contentCenterY *1.48,time=1500, onComplete = zweef2} )
 end
 function zweef2()
 transition.to( ballon,{x=display.contentCenterX *1.9,y=display.contentCenterY *1.40,time=1500, onComplete = zweef} )
 end
-uitbuis()
+zweef()
 
 function buddyup()
   transition.to( buddy,{x=display.contentCenterX *0.1,y=display.contentCenterY *1.23,time=750, onComplete = buddydown} )
