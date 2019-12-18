@@ -7,7 +7,8 @@
 -- Your code here
 
 display.setStatusBar( display.HiddenStatusBar)
-
+local physics = require("physics")
+physics.setDrawMode( "hybrid" )
 
 -- 1 - Corona Engine Bibliotheken aanspreken
 
@@ -15,23 +16,36 @@ display.setStatusBar( display.HiddenStatusBar)
 
 -- 3 - Objecten aanmaken
 
-
-
 local background = display.newImageRect( "assets/images/background.png",display.contentWidth, display.contentHeight )
 background.x = display.contentCenterX
 background.y = display.contentCenterY
+physics.start()
+physics.setGravity( 0,9.8 )
+
+local borderLinks = display.newRect( display.contentCenterX*-0.1, display.contentCenterY * 1, display.contentWidth*0.1, display.contentHeight*1.1 )
+borderLinks.isVisible = false
+physics.addBody( borderLinks, "static")
+
+local borderRechts = display.newRect( display.contentCenterX*2.5, display.contentCenterY *1, display.contentWidth*0.1, display.contentHeight*1.1 )
+borderRechts.isVisible = false
+physics.addBody( borderRechts, "static")
+
+local grass = display.newImageRect("assets/images/grass.png", display.contentWidth*2.4 , display.contentHeight*0.16)
+grass.x = display.contentCenterX * 0.18
+grass.y = display.contentCenterY * 1.86
+
+physics.addBody( grass, "static", { friction=0.3, density=0.8 } )
 
 local wall = display.newImageRect("assets/images/bricks.png", display.contentWidth* 0.09, display.contentHeight *0.6)
 wall.x = display.contentCenterX
 wall.y = display.contentCenterY *1.1
+physics.addBody( wall, "static", { friction=0.0, density=0.5 } )
 
-local grass = display.newImageRect("assets/images/grass.png", display.contentWidth*2.4 , display.contentHeight*0.25)
-grass.x = display.contentCenterX * 0.18
-grass.y = display.contentCenterY * 1.83
 
-local ballon = display.newImageRect("assets/images/Ballon.png",display.contentWidth * 0.1, display.contentHeight *0.3 )
-ballon.x = display.contentCenterX *1.8
-ballon.y = display.contentCenterY *1.47
+local ballon = display.newImageRect("assets/images/Ballon.png",display.contentWidth*0.06 ,display.contentHeight*0.3 )
+ballon.x = display.contentCenterX*1.8
+ballon.y = display.contentCenterY *1.40
+physics.addBody( ballon, "static", { friction=0.0, density=0.5 } )
 
 local avatar = display.newImageRect("assets/images/stickstatic.png", display.contentWidth* 0.3, display.contentHeight*0.3)
 avatar.x = display.contentCenterX * 0.15
@@ -44,6 +58,7 @@ end
 function zweef2()
 transition.to( ballon,{x=display.contentCenterX *1.8,y=display.contentCenterY *1.40,time=1500, onComplete = zweef} )
 end
+
 zweef()
 
 -- 4 - Functies
