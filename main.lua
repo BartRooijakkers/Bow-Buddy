@@ -5,10 +5,13 @@
 -----------------------------------------------------------------------------------------
 
 -- Your code here
+local physics = require("physics")
+
 local background = display.newImageRect( "assets/images/background.png",display.contentWidth, display.contentHeight )
 background.x = display.contentCenterX
 background.y = display.contentCenterY
-
+physics.start()
+physics.setGravity( 0,9.8 )
 display.setStatusBar( display.HiddenStatusBar )
 
 local ballon = display.newImageRect("assets/images/Ballon.png",display.contentWidth*0.06 ,display.contentHeight*0.2 )
@@ -23,25 +26,36 @@ local pijl = display.newImageRect("assets/images/pijl.png",display.contentWidth*
 pijl.x = display.contentCenterX * 0.22
 pijl.y = display.contentCenterY * 1.5
 
-local box = display.newImageRect("assets/images/box.png", display.contentWidth*0.25 ,display.contentHeight*0.25)
-box.x = display.contentCenterX * 1.7
-box.y = display.contentCenterY * 1.55
+local box = display.newImageRect("assets/images/box.png", display.contentWidth*0.10 ,display.contentHeight*0.15)
+box.x = display.contentCenterX * 1.8
+box.y = display.contentCenterY*0.2
+box.rotation = 15
 
-local box1 = display.newImageRect("assets/images/box.png", display.contentWidth*0.25 , display.contentHeight*0.25)
-box1.x = display.contentCenterX * 1.7
-box1.y = display.contentCenterY * 1.31
+physics.addBody( box, { density=1.0, friction=0.3, bounce=0.3 } )
 
-local buis = display.newImageRect("assets/images/buis.png", display.contentWidth *0.2, display.contentHeight*1.5)
+
+local box1 = display.newImageRect("assets/images/box.png", display.contentWidth*0.10 ,display.contentHeight*0.15)
+box1.x = display.contentCenterX * 1.8
+box1.y = display.contentCenterY*1.1
+physics.addBody( box1, { density=1.0, friction=0.3, bounce=0.3 } )
+
+local buis = display.newImageRect("assets/images/buis.png", display.contentWidth *0.1, display.contentHeight*0.4)
 buis.x = display.contentCenterX
-buis.y= display.contentCenterY*-0.5
+buis.y= display.contentCenterY*0.3
 
-local buis = display.newImageRect("assets/images/onderstebuis.png", display.contentWidth *0.2, display.contentHeight*1.5)
-buis.x = display.contentCenterX
-buis.y= display.contentCenterY*1.3
+physics.addBody(buis, "static", { friction=0.3, density=0.5 } )
 
-local grass = display.newImageRect("assets/images/grass.png", display.contentWidth*2.4 , display.contentHeight*0.25)
+local onderstebuis = display.newImageRect("assets/images/onderstebuis.png", display.contentWidth *0.1, display.contentHeight*0.3)
+onderstebuis.x = display.contentCenterX
+onderstebuis.y= display.contentCenterY*1.4
+
+physics.addBody( onderstebuis, "static", { friction=0.3, density=0.5 } )
+
+local grass = display.newImageRect("assets/images/grass.png", display.contentWidth*2.4 , display.contentHeight*0.16)
 grass.x = display.contentCenterX * 0.18
-grass.y = display.contentCenterY * 1.83
+grass.y = display.contentCenterY * 1.86
+
+physics.addBody( grass, "static", { friction=0.3, density=0.8 } )
 
 local buddy = display.newImageRect( "assets/images/buddy.png",display.contentWidth*0.05 ,display.contentHeight*0.12)
 buddy.x = display.contentCenterX * 0.1
@@ -65,6 +79,7 @@ function buddydown()
   transition.to( buddy,{x=display.contentCenterX *0.1,y=display.contentCenterY *1.21,time=750, onComplete = buddyup} )
 end
 buddyup()
+
 -- 1 - Corona Engine Bibliotheken aanspreken
 
 -- 2 - Vaste variablen aanmaken
