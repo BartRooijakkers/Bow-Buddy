@@ -204,6 +204,7 @@ reload:play()
     ammo.text = pijlen
 
 
+
     local function onLocalCollision( self, event )
       function scorebereken()
       print(score)
@@ -240,6 +241,7 @@ reload:play()
                   audio.play(impact)
         end
     end
+
 
 
 
