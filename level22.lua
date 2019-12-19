@@ -13,7 +13,11 @@ local scene = composer.newScene()
 -- -----------------------------------------------------------------------------------
 -- Scene event functions
 -- -----------------------------------------------------------------------------------
-
+local function fail ()
+  composer.removeScene("level22")
+  composer.gotoScene("levelcom")
+  print("logging")
+end
 -- create()
 function scene:create( event )
 
@@ -27,6 +31,7 @@ function scene:create( event )
 
     local scene = composer.newScene()
     physics.setDrawMode( "normal" )
+      audio.play(muziek)
 
     -- 1 - Corona Engine Bibliotheken aanspreken
 
@@ -46,9 +51,11 @@ function scene:create( event )
 
     local getTrajectoryPoint
     local pijlvuren
-
-
-
+    local win = audio.loadSound( "geluid/win.mp3" )
+    local shoot = audio.loadSound("geluid/shoot.wav")
+    local impact = audio.loadSound( "geluid/impact.mp3" )
+    local fail = audio.loadSound("geluid/fail.mp3")
+    local pop = audio.loadSound("geluid/pop.mp3")
 
     local borderLinks = display.newRect( display.contentCenterX*-0.1, display.contentCenterY * 1, display.contentWidth*0.1, display.contentHeight*1.1 )
     borderLinks.isVisible = false
@@ -77,9 +84,7 @@ function scene:create( event )
     ballon.y = display.contentCenterY *1.40
     physics.addBody( ballon, "static", { friction=0.0, density=0.5 } )
     ballon.myname = "ballon"
-    local avatar = display.newImageRect("assets/images/stickstatic.png", display.contentWidth* 0.3, display.contentHeight*0.3)
-    avatar.x = display.contentCenterX * 0.22
-    avatar.y = display.contentCenterY * 1.5
+
     local ammoAmount = display.newImageRect("assets/images/arrows.png", display.contentWidth*0.1, display.contentHeight*0.12)
     ammoAmount.x = display.contentCenterX * 1.87
     ammoAmount.y = display.contentCenterY * 0.15
@@ -99,8 +104,35 @@ function scene:create( event )
     onderstebuis.x = display.contentCenterX
     onderstebuis.y= display.contentCenterY*1.4
     onderstebuis.myname = "onderstebuis"
-
     physics.addBody( onderstebuis, "static", { friction=0.3, density=0.5 } )
+
+    local options =
+    {
+      width = 256,
+      height = 256,
+      numFrames = 14
+    }
+
+    local reloadSheet = graphics.newImageSheet("assets/images/reload2.png", options)
+
+    local reloadSequenceData =
+    {
+      name="reloading",
+      start = 1,
+      count = 14,
+      time = 2000,
+      loopCount = 1,
+      loopDirection = "Forward"
+    }
+
+    local reload = display.newSprite(reloadSheet, reloadSequenceData)
+
+    reload:setSequence("reloading")
+
+    reload.x, reload.y = display.contentCenterX * 0.2, display.contentCenterY * 1.5
+    reload:play()
+
+
     local function screenTouch( event )
 
         if ( event.phase == "moved" ) then
@@ -123,9 +155,14 @@ function scene:create( event )
         elseif ( event.phase == "ended") then
     if (pijlen >0) then
             pijlvuren( event )
-
+              audio.play(shoot)
+            reload:play()
           else
-            print("game over")
+            local fail = display.newImageRect("assets/images/buttons/opnieuw.png",display.contentWidth*0.5 , display.contentHeight* 0.5)
+            fail.x = display.contentCenterX
+            fail.y = display.contentCenterY
+            audio.play(fail)
+            fail:addEventListener("tap", fail)
         end
       end
         return true
@@ -201,24 +238,30 @@ function scene:create( event )
       end
 
         if ( event.phase == "ended" and self.myname == "ballon" and event.other.myname == "pijl") then
-          score = score + 1
+          score = score + pijlen * 50 + 500
           display.remove(self)
+          audio.play(pop)
           display.remove(event.other)
+          audio.play(win)
           scorebereken()
           tellen()
 
     elseif ( event.phase == "began" and self.myname == "buis" and event.other.myname == "pijl") then
         display.remove(event.other)
           tellen()
+              audio.play(impact)
         elseif ( event.phase == "began" and self.myname == "onderstebuis" and event.other.myname == "pijl") then
             display.remove(event.other)
               tellen()
+                  audio.play(impact)
       elseif ( event.phase == "began" and self.myname == "borderRechts" and event.other.myname == "pijl") then
             display.remove(event.other)
               tellen()
+                  audio.play(impact)
           elseif ( event.phase == "began" and self.myname == "grass" and event.other.myname == "pijl") then
                 display.remove(event.other)
                   tellen()
+                      audio.play(impact)
         end
     end
 

@@ -21,7 +21,7 @@ local scene = composer.newScene()
       composer.gotoScene( "menu" )
       print("logging")
     end
-
+  audio.play(muziek)
     local function changeSceneslevel1 ()
       composer.removeScene( "levelcom" )
       composer.gotoScene("level11")

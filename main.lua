@@ -7,9 +7,10 @@ local scene = composer.newScene()
 -- Code outside of the scene event functions below will only be executed ONCE unless
 -- the scene is removed entirely (not recycled) via "composer.removeScene()"
 -- -----------------------------------------------------------------------------------
-
-
-
+audio.setVolume( 0.5 )
+_G.muziek = audio.loadStream("geluid/achtergrond.mp3",{ channel=1 })
+audio.setVolume( 0.1, { channel=1 } )
+  audio.play(muziek)
 
 -- -----------------------------------------------------------------------------------
 -- Scene event functions

@@ -24,7 +24,7 @@ local function naarcredits ()
   composer.gotoScene("credits")
   print("oke")
 end
-
+  audio.play(muziek)
 -- create()
 function scene:create( event )
     display.setStatusBar( display.HiddenStatusBar)
