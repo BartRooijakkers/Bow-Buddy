@@ -1,7 +1,7 @@
-
 local composer = require( "composer" )
 
-local scene = composer.newScene("level")
+local scene = composer.newScene()
+
 
 local background = display.newImageRect( "assets/images/background.png",display.contentWidth, display.contentHeight )
 background.x = display.contentCenterX
@@ -17,7 +17,7 @@ menu.y = display.contentCenterY * 0.25
 menu.id = "menu"
 
 local function onObjectTouch( self, event )
-    composer.gotoScene("main")
+    print("logging")
 end
 
 menu.touch = onObjectTouch
@@ -50,7 +50,7 @@ end
 level2.touch = onObjectTouch
 level2:addEventListener( "touch", level2 )
 
-
+return scene
 
 
 ----scene composer

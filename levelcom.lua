@@ -2,6 +2,8 @@ local composer = require( "composer" )
 
 local scene = composer.newScene()
 
+local prevScene = composer.getSceneName( "previous" )
+
 -- -----------------------------------------------------------------------------------
 -- Code outside of the scene event functions below will only be executed ONCE unless
 -- the scene is removed entirely (not recycled) via "composer.removeScene()"
@@ -14,9 +16,19 @@ local scene = composer.newScene()
 -- Scene event functions
 -- -----------------------------------------------------------------------------------
 
-local function changeScenes ()
-  composer.gotoScene("levelcom")
-end
+
+    local function main ()
+      composer.gotoScene( "menu" )
+      print("logging")
+    end
+
+    local function changeSceneslevel1 ()
+      composer.gotoScene("level11")
+    end
+
+    local function changeSceneslevel2 ()
+      composer.gotoScene("level2")
+    end
 -- create()
 function scene:create( event )
 
@@ -26,27 +38,26 @@ function scene:create( event )
     background.x = display.contentCenterX
     background.y = display.contentCenterY
 
-    local grass = display.newImageRect("assets/images/grass.png", display.contentWidth*2.4 , display.contentHeight*0.25)
-    grass.x = display.contentCenterX * 0.18
-    grass.y = display.contentCenterY * 1.83
+    --menu knop
+    local menu = display.newImageRect("assets/images/buttons/menu.png", display.contentWidth* 0.15, display.contentHeight *0.15)
+    menu.x = display.contentCenterX * 0.25
+    menu.y = display.contentCenterY * 0.25
 
-    local avatar = display.newImageRect("assets/images/stickstatic.png", display.contentWidth* 0.3, display.contentHeight*0.3)
-    avatar.x = display.contentCenterX * 0.15
-    avatar.y = display.contentCenterY * 1.5
+    menu:addEventListener("tap", main)
 
+    --level 1
+    local level1 = display.newImageRect("assets/images/buttons/level1.png", display.contentWidth* 0.3, display.contentHeight *0.3)
+    level1.x = display.contentCenterX * 0.66
+    level1.y = display.contentCenterY * 1
 
-    --level knop
-    local button = display.newImageRect( "assets/images/buttons/levels.png", display.contentWidth*0.15, display.contentHeight*0.15 )
-    button.x = display.contentCenterX * 0.98
-    button.y = display.contentCenterY * 1.20
+    level1:addEventListener("tap", changeSceneslevel1)
 
-    button:addEventListener("tap", changeScenes)
+    --level 2
+    local level2 = display.newImageRect("assets/images/buttons/level2.png", display.contentWidth* 0.3, display.contentHeight *0.3)
+    level2.x = display.contentCenterX * 1.33
+    level2.y = display.contentCenterY * 1
 
-    --opties knop
-    local opties = display.newImageRect( "assets/images/buttons/opties.png", display.contentWidth*0.15 , display.contentHeight*0.15 )
-    opties.x = display.contentCenterX / 1.02
-    opties.y = display.contentCenterY / 0.65
-
+    level2:addEventListener("tap", changeSceneslevel2)
 
 end
 
@@ -56,6 +67,9 @@ function scene:show( event )
 
     local sceneGroup = self.view
     local phase = event.phase
+
+
+
 
     if ( phase == "will" ) then
         -- Code here runs when the scene is still off screen (but is about to come on screen)

@@ -1,4 +1,5 @@
-local composer = require( "composer" )
+local composer = require("composer")
+composer.gotoScene("menu")
 
 local scene = composer.newScene()
 
@@ -14,39 +15,11 @@ local scene = composer.newScene()
 -- Scene event functions
 -- -----------------------------------------------------------------------------------
 
-local function changeScenes ()
-  composer.gotoScene("levelcom")
-end
 -- create()
 function scene:create( event )
 
     local sceneGroup = self.view
     -- Code here runs when the scene is first created but has not yet appeared on screen
-    local background = display.newImageRect( "assets/images/background.png",display.contentWidth, display.contentHeight )
-    background.x = display.contentCenterX
-    background.y = display.contentCenterY
-
-    local grass = display.newImageRect("assets/images/grass.png", display.contentWidth*2.4 , display.contentHeight*0.25)
-    grass.x = display.contentCenterX * 0.18
-    grass.y = display.contentCenterY * 1.83
-
-    local avatar = display.newImageRect("assets/images/stickstatic.png", display.contentWidth* 0.3, display.contentHeight*0.3)
-    avatar.x = display.contentCenterX * 0.15
-    avatar.y = display.contentCenterY * 1.5
-
-
-    --level knop
-    local button = display.newImageRect( "assets/images/buttons/levels.png", display.contentWidth*0.15, display.contentHeight*0.15 )
-    button.x = display.contentCenterX * 0.98
-    button.y = display.contentCenterY * 1.20
-
-    button:addEventListener("tap", changeScenes)
-
-    --opties knop
-    local opties = display.newImageRect( "assets/images/buttons/opties.png", display.contentWidth*0.15 , display.contentHeight*0.15 )
-    opties.x = display.contentCenterX / 1.02
-    opties.y = display.contentCenterY / 0.65
-
 
 end
 
