@@ -8,7 +8,10 @@
 
 display.setStatusBar( display.HiddenStatusBar)
 local physics = require("physics")
-physics.setDrawMode( "hybrid" )
+local composer = require( "composer" )
+
+local scene = composer.newScene()
+physics.setDrawMode( "normal" )
 
 -- 1 - Corona Engine Bibliotheken aanspreken
 
@@ -21,24 +24,31 @@ background.x = display.contentCenterX
 background.y = display.contentCenterY
 physics.start()
 physics.setGravity( 0,9.8 )
-
+score = 0
+pijlen = 5
 local berekendPad = display.newGroup()
 
 
 local getTrajectoryPoint
 local pijlvuren
 
+
+
+
 local borderLinks = display.newRect( display.contentCenterX*-0.1, display.contentCenterY * 1, display.contentWidth*0.1, display.contentHeight*1.1 )
 borderLinks.isVisible = false
 physics.addBody( borderLinks, "static")
+borderLinks.myname = "borderLinks"
 
 local borderRechts = display.newRect( display.contentCenterX*2.5, display.contentCenterY *1, display.contentWidth*0.1, display.contentHeight*1.1 )
 borderRechts.isVisible = false
 physics.addBody( borderRechts, "static")
+borderRechts.myname = "borderRechts"
 
 local grass = display.newImageRect("assets/images/grass.png", display.contentWidth*2.4 , display.contentHeight*0.16)
 grass.x = display.contentCenterX * 0.18
 grass.y = display.contentCenterY * 1.86
+grass.myname = "grass"
 
 physics.addBody( grass, "static", { friction=0.3, density=0.8 } )
 
@@ -46,12 +56,15 @@ local wall = display.newImageRect("assets/images/bricks.png", display.contentWid
 wall.x = display.contentCenterX
 wall.y = display.contentCenterY *1.1
 physics.addBody( wall, "static", { friction=0.0, density=0.5 } )
+wall.myname = "Wall"
 
 
 local ballon = display.newImageRect("assets/images/Ballon.png",display.contentWidth*0.06 ,display.contentHeight*0.3 )
 ballon.x = display.contentCenterX*1.8
 ballon.y = display.contentCenterY *1.40
 physics.addBody( ballon, "static", { friction=0.0, density=0.5 } )
+ballon.myname = "ballon"
+
 
 local avatar = display.newImageRect("assets/images/stickstatic.png", display.contentWidth* 0.3, display.contentHeight*0.3)
 avatar.x = display.contentCenterX * 0.15
@@ -74,10 +87,14 @@ local function screenTouch( event )
             dot:setFillColor(244, 164, 96 )
         end
 
-    elseif ( event.phase == "ended" ) then
-
+    elseif ( event.phase == "ended") then
+if (pijlen >0) then
         pijlvuren( event )
+
+      else
+        print("game over")
     end
+  end
     return true
 end
 Runtime:addEventListener( "touch", screenTouch )
@@ -103,6 +120,7 @@ pijlvuren = function( event )
     local pijl = display.newImageRect("assets/images/pijl.png",display.contentWidth*0.12, display.contentHeight*0.03 )
     pijl.x = display.contentCenterX * 0.22
     pijl.y = display.contentCenterY * 1.5
+    pijl.myname = "pijl"
 
 
     physics.addBody( pijl, { bounce=0.2, density=1.0, radius=24 } )
@@ -111,7 +129,13 @@ pijlvuren = function( event )
     local vx, vy = event.x-event.xStart, event.y-event.yStart
 
     pijl:setLinearVelocity( vx, vy )
+
+    pijlen = pijlen - 1
+
+
 end
+
+
 
 
 function zweef()
@@ -121,7 +145,63 @@ function zweef2()
 transition.to( ballon,{x=display.contentCenterX *1.8,y=display.contentCenterY *1.40,time=1500, onComplete = zweef} )
 end
 
+
+
 zweef()
+
+local ammo =display.newText( pijlen, display.contentWidth * 0.12, display.contentHeight*0.12 )
+ammo.x = display.contentCenterX
+ammo.Y = display.contentCenterY
+ammo.text = pijlen
+
+
+local function onLocalCollision( self, event )
+  function scorebereken()
+  print(score)
+  end
+
+
+  function tellen()
+
+    ammo.text = pijlen
+  end
+
+    if ( event.phase == "ended" and self.myname == "ballon" and event.other.myname == "pijl") then
+      score = score + 1
+      display.remove(self)
+      display.remove(event.other)
+      scorebereken()
+      tellen()
+
+elseif ( event.phase == "began" and self.myname == "Wall" and event.other.myname == "pijl") then
+    display.remove(event.other)
+      tellen()
+  elseif ( event.phase == "began" and self.myname == "borderRechts" and event.other.myname == "pijl") then
+        display.remove(event.other)
+          tellen()
+      elseif ( event.phase == "began" and self.myname == "grass" and event.other.myname == "pijl") then
+            display.remove(event.other)
+              tellen()
+    end
+end
+
+
+
+
+
+
+
+ballon.collision = onLocalCollision
+ballon:addEventListener( "collision" )
+grass.collision = onLocalCollision
+grass:addEventListener( "collision" )
+wall.collision = onLocalCollision
+wall:addEventListener( "collision" )
+wall.collision = onLocalCollision
+wall:addEventListener( "collision" )
+borderRechts.collision = onLocalCollision
+borderRechts:addEventListener( "collision" )
+
 
 -- 4 - Functies
 
