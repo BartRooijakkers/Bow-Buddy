@@ -85,6 +85,10 @@ function scene:create( event )
     avatar.x = display.contentCenterX * 0.15
     avatar.y = display.contentCenterY * 1.5
 
+local ammoAmount = display.newImageRect("assets/images/arrows.png", display.contentWidth*0.1, display.contentHeight*0.12)
+ammoAmount.x = display.contentCenterX * 1.87
+ammoAmount.y = display.contentCenterY * 0.15
+
     local function screenTouch( event )
 
         if ( event.phase == "moved" ) then
@@ -168,8 +172,8 @@ function scene:create( event )
     zweef()
 
     local ammo =display.newText( pijlen, display.contentWidth * 0.12, display.contentHeight*0.12 )
-    ammo.x = display.contentCenterX
-    ammo.Y = display.contentCenterY
+    ammo.x = display.contentCenterX * 1.93
+    ammo.y = display.contentCenterY * 0.15
     ammo.text = pijlen
 
 
