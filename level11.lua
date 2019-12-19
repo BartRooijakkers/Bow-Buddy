@@ -89,9 +89,6 @@ local ammoAmount = display.newImageRect("assets/images/arrows.png", display.cont
 ammoAmount.x = display.contentCenterX * 1.87
 ammoAmount.y = display.contentCenterY * 0.15
 
-local levelmenu = display.newImageRect("assets/images/buttons/levels.png", display.contentWidth*0.1, display.contentHeight*0.12)
-levelmenu.x = display.contentCenterX * 0.1
-levelmenu.y = display.contentCenterY * 0.12
 
     local function screenTouch( event )
 

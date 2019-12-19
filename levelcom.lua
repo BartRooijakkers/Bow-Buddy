@@ -2,7 +2,6 @@ local composer = require( "composer" )
 
 local scene = composer.newScene()
 
-local prevScene = composer.getSceneName( "previous" )
 
 -- -----------------------------------------------------------------------------------
 -- Code outside of the scene event functions below will only be executed ONCE unless
@@ -24,10 +23,12 @@ local prevScene = composer.getSceneName( "previous" )
     end
 
     local function changeSceneslevel1 ()
+      composer.removeScene( "levelcom" )
       composer.gotoScene("level11")
     end
 
     local function changeSceneslevel2 ()
+      composer.removeScene( "levelcom" )
       composer.gotoScene("level22")
     end
 -- create()

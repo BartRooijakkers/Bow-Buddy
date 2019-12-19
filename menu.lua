@@ -18,6 +18,13 @@ local function changeScenes ()
   composer.removeScene("menu")
   composer.gotoScene("levelcom")
 end
+
+local function naarcredits ()
+  composer.removeScene("menu")
+  composer.gotoScene("credits")
+  print("oke")
+end
+
 -- create()
 function scene:create( event )
     display.setStatusBar( display.HiddenStatusBar)
@@ -39,14 +46,21 @@ function scene:create( event )
     --level knop
     local button = display.newImageRect( "assets/images/buttons/levels.png", display.contentWidth*0.15, display.contentHeight*0.15 )
     button.x = display.contentCenterX * 0.98
-    button.y = display.contentCenterY * 1.20
+    button.y = display.contentCenterY * 1
 
     button:addEventListener("tap", changeScenes)
 
     --opties knop
     local opties = display.newImageRect( "assets/images/buttons/opties.png", display.contentWidth*0.15 , display.contentHeight*0.15 )
     opties.x = display.contentCenterX / 1.02
-    opties.y = display.contentCenterY / 0.65
+    opties.y = display.contentCenterY / 0.75
+
+    --credits knop
+    local credits = display.newImageRect( "assets/images/buttons/credits.png", display.contentWidth*0.15 , display.contentHeight*0.15 )
+    credits.x = display.contentCenterX / 1.02
+    credits.y = display.contentCenterY / 0.6
+
+    credits:addEventListener("tap", naarcredits)
 
 
     sceneGroup:insert( background )
@@ -54,6 +68,7 @@ function scene:create( event )
     sceneGroup:insert( avatar  )
     sceneGroup:insert( button )
     sceneGroup:insert( opties )
+    sceneGroup:insert( credits )
 
 end
 
