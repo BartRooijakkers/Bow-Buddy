@@ -27,7 +27,7 @@ local prevScene = composer.getSceneName( "previous" )
     end
 
     local function changeSceneslevel2 ()
-      composer.gotoScene("level2")
+      composer.gotoScene("level22")
     end
 -- create()
 function scene:create( event )
