@@ -27,6 +27,7 @@ function scene:create( event )
 
     local scene = composer.newScene()
     physics.setDrawMode( "normal" )
+  audio.play(muziek)
 
     -- 1 - Corona Engine Bibliotheken aanspreken
 
@@ -46,9 +47,11 @@ function scene:create( event )
 
     local getTrajectoryPoint
     local pijlvuren
-
-
-
+      local win = audio.loadSound( "geluid/win.mp3" )
+      local shoot = audio.loadSound("geluid/shoot.wav")
+      local impact = audio.loadSound( "geluid/impact.mp3" )
+      local fail = audio.loadSound("geluid/fail.mp3")
+      local pop = audio.loadSound("geluid/pop.mp3")
 
     local borderLinks = display.newRect( display.contentCenterX*-0.1, display.contentCenterY * 1, display.contentWidth*0.1, display.contentHeight*1.1 )
     borderLinks.isVisible = false
@@ -137,10 +140,11 @@ reload:play()
         elseif ( event.phase == "ended") then
     if (pijlen >0) then
             pijlvuren( event )
+            audio.play(shoot)
             reload:play()
 
           else
-            print("game over")
+          audio.play(fail)
         end
       end
         return true
@@ -214,22 +218,29 @@ reload:play()
         ammo.text = pijlen
       end
 
+
+
         if ( event.phase == "ended" and self.myname == "ballon" and event.other.myname == "pijl") then
           score = score + pijlen * 50 + 500
           display.remove(self)
+          audio.play(pop)
           display.remove(event.other)
+          audio.play(win)
           scorebereken()
           tellen()
 
     elseif ( event.phase == "began" and self.myname == "Wall" and event.other.myname == "pijl") then
         display.remove(event.other)
           tellen()
+          audio.play(impact)
       elseif ( event.phase == "began" and self.myname == "borderRechts" and event.other.myname == "pijl") then
             display.remove(event.other)
               tellen()
+              audio.play(impact)
           elseif ( event.phase == "began" and self.myname == "grass" and event.other.myname == "pijl") then
                 display.remove(event.other)
                   tellen()
+                  audio.play(impact)
         end
     end
 

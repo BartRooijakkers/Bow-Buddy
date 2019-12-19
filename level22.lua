@@ -13,7 +13,11 @@ local scene = composer.newScene()
 -- -----------------------------------------------------------------------------------
 -- Scene event functions
 -- -----------------------------------------------------------------------------------
-
+local function fail ()
+  composer.removeScene("level22")
+  composer.gotoScene("levelcom")
+  print("logging")
+end
 -- create()
 function scene:create( event )
 
@@ -27,6 +31,7 @@ function scene:create( event )
 
     local scene = composer.newScene()
     physics.setDrawMode( "normal" )
+      audio.play(muziek)
 
     -- 1 - Corona Engine Bibliotheken aanspreken
 
@@ -46,9 +51,11 @@ function scene:create( event )
 
     local getTrajectoryPoint
     local pijlvuren
-
-
-
+    local win = audio.loadSound( "geluid/win.mp3" )
+    local shoot = audio.loadSound("geluid/shoot.wav")
+    local impact = audio.loadSound( "geluid/impact.mp3" )
+    local fail = audio.loadSound("geluid/fail.mp3")
+    local pop = audio.loadSound("geluid/pop.mp3")
 
     local borderLinks = display.newRect( display.contentCenterX*-0.1, display.contentCenterY * 1, display.contentWidth*0.1, display.contentHeight*1.1 )
     borderLinks.isVisible = false
@@ -99,9 +106,6 @@ function scene:create( event )
     onderstebuis.x = display.contentCenterX
     onderstebuis.y= display.contentCenterY*1.4
     onderstebuis.myname = "onderstebuis"
-
-
-
     physics.addBody( onderstebuis, "static", { friction=0.3, density=0.5 } )
 
     local options =
@@ -153,9 +157,14 @@ function scene:create( event )
         elseif ( event.phase == "ended") then
     if (pijlen >0) then
             pijlvuren( event )
+              audio.play(shoot)
             reload:play()
           else
-            composer.gotoScene( "menu" )
+            local fail = display.newImageRect("assets/images/buttons/opnieuw.png",display.contentWidth*0.5 , display.contentHeight* 0.5)
+            fail.x = display.contentCenterX
+            fail.y = display.contentCenterY
+            audio.play(fail)
+            fail:addEventListener("tap", fail)
         end
       end
         return true
@@ -231,24 +240,30 @@ function scene:create( event )
       end
 
         if ( event.phase == "ended" and self.myname == "ballon" and event.other.myname == "pijl") then
-          score = score + 1
+          score = score + pijlen * 50 + 500
           display.remove(self)
+          audio.play(pop)
           display.remove(event.other)
+          audio.play(win)
           scorebereken()
           tellen()
 
     elseif ( event.phase == "began" and self.myname == "buis" and event.other.myname == "pijl") then
         display.remove(event.other)
           tellen()
+              audio.play(impact)
         elseif ( event.phase == "began" and self.myname == "onderstebuis" and event.other.myname == "pijl") then
             display.remove(event.other)
               tellen()
+                  audio.play(impact)
       elseif ( event.phase == "began" and self.myname == "borderRechts" and event.other.myname == "pijl") then
             display.remove(event.other)
               tellen()
+                  audio.play(impact)
           elseif ( event.phase == "began" and self.myname == "grass" and event.other.myname == "pijl") then
                 display.remove(event.other)
                   tellen()
+                      audio.play(impact)
         end
     end
 

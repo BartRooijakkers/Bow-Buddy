@@ -18,6 +18,7 @@ local function changeScenes ()
   composer.removeScene("menu")
   composer.gotoScene("levelcom")
 end
+  audio.play(muziek)
 -- create()
 function scene:create( event )
     display.setStatusBar( display.HiddenStatusBar)

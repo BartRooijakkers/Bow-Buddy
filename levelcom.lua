@@ -22,7 +22,7 @@ local prevScene = composer.getSceneName( "previous" )
       composer.gotoScene( "menu" )
       print("logging")
     end
-
+  audio.play(muziek)
     local function changeSceneslevel1 ()
       composer.gotoScene("level11")
     end
