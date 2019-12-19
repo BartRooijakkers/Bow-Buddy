@@ -80,11 +80,6 @@ function scene:create( event )
     physics.addBody( ballon, "static", { friction=0.0, density=0.5 } )
     ballon.myname = "ballon"
 
-
-    local avatar = display.newImageRect("assets/images/stickstatic.png", display.contentWidth* 0.3, display.contentHeight*0.3)
-    avatar.x = display.contentCenterX * 0.15
-    avatar.y = display.contentCenterY * 1.5
-
 local ammoAmount = display.newImageRect("assets/images/arrows.png", display.contentWidth*0.1, display.contentHeight*0.12)
 ammoAmount.x = display.contentCenterX * 1.87
 ammoAmount.y = display.contentCenterY * 0.15
@@ -92,6 +87,32 @@ ammoAmount.y = display.contentCenterY * 0.15
 local levelmenu = display.newImageRect("assets/images/buttons/levels.png", display.contentWidth*0.1, display.contentHeight*0.12)
 levelmenu.x = display.contentCenterX * 0.1
 levelmenu.y = display.contentCenterY * 0.12
+
+local options =
+{
+  width = 256,
+  height = 256,
+  numFrames = 14
+}
+
+local reloadSheet = graphics.newImageSheet("assets/images/reload2.png", options)
+
+local reloadSequenceData =
+{
+  name="reloading",
+  start = 1,
+  count = 14,
+  time = 2000,
+  loopCount = 1,
+  loopDirection = "Forward"
+}
+
+local reload = display.newSprite(reloadSheet, reloadSequenceData)
+
+reload:setSequence("reloading")
+
+reload.x, reload.y = display.contentCenterX * 0.2, display.contentCenterY * 1.5
+reload:play()
 
     local function screenTouch( event )
 
@@ -116,6 +137,7 @@ levelmenu.y = display.contentCenterY * 0.12
         elseif ( event.phase == "ended") then
     if (pijlen >0) then
             pijlvuren( event )
+            reload:play()
 
           else
             print("game over")
@@ -193,7 +215,7 @@ levelmenu.y = display.contentCenterY * 0.12
       end
 
         if ( event.phase == "ended" and self.myname == "ballon" and event.other.myname == "pijl") then
-          score = score + 1
+          score = score + pijlen * 50 + 500
           display.remove(self)
           display.remove(event.other)
           scorebereken()

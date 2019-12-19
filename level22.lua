@@ -77,9 +77,7 @@ function scene:create( event )
     ballon.y = display.contentCenterY *1.40
     physics.addBody( ballon, "static", { friction=0.0, density=0.5 } )
     ballon.myname = "ballon"
-    local avatar = display.newImageRect("assets/images/stickstatic.png", display.contentWidth* 0.3, display.contentHeight*0.3)
-    avatar.x = display.contentCenterX * 0.22
-    avatar.y = display.contentCenterY * 1.5
+
     local ammoAmount = display.newImageRect("assets/images/arrows.png", display.contentWidth*0.1, display.contentHeight*0.12)
     ammoAmount.x = display.contentCenterX * 1.87
     ammoAmount.y = display.contentCenterY * 0.15
@@ -102,7 +100,37 @@ function scene:create( event )
     onderstebuis.y= display.contentCenterY*1.4
     onderstebuis.myname = "onderstebuis"
 
+
+
     physics.addBody( onderstebuis, "static", { friction=0.3, density=0.5 } )
+
+    local options =
+    {
+      width = 256,
+      height = 256,
+      numFrames = 14
+    }
+
+    local reloadSheet = graphics.newImageSheet("assets/images/reload2.png", options)
+
+    local reloadSequenceData =
+    {
+      name="reloading",
+      start = 1,
+      count = 14,
+      time = 2000,
+      loopCount = 1,
+      loopDirection = "Forward"
+    }
+
+    local reload = display.newSprite(reloadSheet, reloadSequenceData)
+
+    reload:setSequence("reloading")
+
+    reload.x, reload.y = display.contentCenterX * 0.2, display.contentCenterY * 1.5
+    reload:play()
+
+
     local function screenTouch( event )
 
         if ( event.phase == "moved" ) then
@@ -125,9 +153,9 @@ function scene:create( event )
         elseif ( event.phase == "ended") then
     if (pijlen >0) then
             pijlvuren( event )
-
+            reload:play()
           else
-            print("game over")
+            composer.gotoScene( "menu" )
         end
       end
         return true
