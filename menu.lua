@@ -15,11 +15,12 @@ local scene = composer.newScene()
 -- -----------------------------------------------------------------------------------
 
 local function changeScenes ()
+  composer.removeScene("menu")
   composer.gotoScene("levelcom")
 end
 -- create()
 function scene:create( event )
-
+    display.setStatusBar( display.HiddenStatusBar)
     local sceneGroup = self.view
     -- Code here runs when the scene is first created but has not yet appeared on screen
     local background = display.newImageRect( "assets/images/background.png",display.contentWidth, display.contentHeight )
@@ -47,6 +48,12 @@ function scene:create( event )
     opties.x = display.contentCenterX / 1.02
     opties.y = display.contentCenterY / 0.65
 
+
+    sceneGroup:insert( background )
+    sceneGroup:insert( grass )
+    sceneGroup:insert( avatar  )
+    sceneGroup:insert( button )
+    sceneGroup:insert( opties )
 
 end
 

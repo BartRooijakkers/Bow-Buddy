@@ -112,7 +112,7 @@ function scene:create( event )
                 local baanPos = getTrajectoryPoint( s, beginSnelheid, i )
                 local dot = display.newCircle( berekendPad, baanPos.x, baanPos.y, 3 )
                 dot:setFillColor(244, 164, 96 )
-                if(dot.x > display.contentCenterX *0.8) then
+                if(dot.x > display.contentCenterX *0.85) then
                   dot.isVisible = false
                 end
             end

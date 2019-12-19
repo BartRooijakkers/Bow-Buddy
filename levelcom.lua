@@ -18,6 +18,7 @@ local prevScene = composer.getSceneName( "previous" )
 
 
     local function main ()
+      composer.removeScene( "levelcom" )
       composer.gotoScene( "menu" )
       print("logging")
     end
@@ -31,7 +32,7 @@ local prevScene = composer.getSceneName( "previous" )
     end
 -- create()
 function scene:create( event )
-
+display.setStatusBar( display.HiddenStatusBar)
     local sceneGroup = self.view
     -- Code here runs when the scene is first created but has not yet appeared on screen
     local background = display.newImageRect( "assets/images/background.png",display.contentWidth, display.contentHeight )
@@ -58,6 +59,11 @@ function scene:create( event )
     level2.y = display.contentCenterY * 1
 
     level2:addEventListener("tap", changeSceneslevel2)
+
+    sceneGroup:insert( background )
+    sceneGroup:insert( menu )
+    sceneGroup:insert( level1 )
+    sceneGroup:insert( level2 )
 
 end
 
