@@ -101,7 +101,6 @@ local function screenTouch( event )
               dot.isVisible = false
             end
         end
-
     elseif ( event.phase == "ended") then
 if (pijlen >0) then
         pijlvuren( event )
